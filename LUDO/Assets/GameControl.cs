@@ -52,7 +52,7 @@ public class GameControl : MonoBehaviour {
             player2StartWaypoint = player2.GetComponent<FollowThePath>().waypointIndex - 1;
         }
 
-        if (player1.GetComponent<FollowThePath>().waypointIndex == 
+        /*if (player1.GetComponent<FollowThePath>().waypointIndex == 
             player1.GetComponent<FollowThePath>().waypoints.Length)
         {
             whoWinsTextShadow.gameObject.SetActive(true);
@@ -68,7 +68,7 @@ public class GameControl : MonoBehaviour {
             player2MoveText.gameObject.SetActive(false);
             whoWinsTextShadow.GetComponent<Text>().text = "Player 2 Wins";
             gameOver = true;
-        }
+        }*/
     }
 
     public static void MovePlayer(int playerToMove)
