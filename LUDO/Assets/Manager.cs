@@ -5,11 +5,13 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     public int whoseTurn;
-    public PlayerPiece red, blue, green, yellow;
-    public bool redLaunch, greenLaunch, blueLaunch, yellowLaunch;
+    public int redSteps, blueSteps, greenSteps, yellowSteps;
+    
+    public int redScore, blueScore, greenScore, yellowScore;
     public static Manager gm;
     public int stepsAmount;
-    public bool canMove, hasLaunched;
+    public bool canMove, canLaunch;
+    public bool gameClear;
     GameDice dice;
     private void Awake() {
         gm = this;
@@ -26,34 +28,49 @@ public class Manager : MonoBehaviour
         
     }
 
+    public void declareWinner(){
+        if(redScore == 4){
+            gameClear = true;
+            Debug.Log("Player 1 Wins");
+        }else if(blueScore == 4){
+            gameClear = true;
+            Debug.Log("Player 1 Wins");
+        }else if(greenScore == 4){
+            Debug.Log("Player 1 Wins");
+            gameClear = true;
+        }else if(yellowScore == 4){
+            Debug.Log("Player 1 Wins");
+            gameClear = true;
+        }
+    }
     public void changeTurn(int player){
 
-        if(canMove == true){
+        /*if(canMove == true){
             switch (whoseTurn){
             case 1:
                 //red.canMove = true;
-                red.MoveSpace = stepsAmount;
+                redSteps = stepsAmount;
                 break;
             case 2:
                 //blue.canMove = true;
-                blue.MoveSpace = stepsAmount;
+                blueSteps = stepsAmount;
                 break;
             case 3:
                 //green.canMove = true;
-                green.MoveSpace = stepsAmount;
+                greenSteps = stepsAmount;
                 break;
             case 4:
                 //yellow.canMove = true;
-                yellow.MoveSpace = stepsAmount;
+                yellowSteps = stepsAmount;
                 break;
             }
             //canMove = false;
-        }
+        }*/
        
     }
 
     public void LaunchTurn(int player){
-        if(hasLaunched == true){
+        /*if(hasLaunched == true){
             switch (player){
             case 1:
                 red.launch();
@@ -73,6 +90,6 @@ public class Manager : MonoBehaviour
                 break;
             }
             //hasLaunched = false;
-        }
+        }*/
     }
 }

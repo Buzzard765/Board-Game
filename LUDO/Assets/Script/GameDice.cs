@@ -8,6 +8,7 @@ public class GameDice : MonoBehaviour {
     public int whosTurn = 1;  
     //public Core GameManager;
     public int randomDiceSide;
+    public int bonusRoll = 2;
 	// Use this for initialization
     public bool onRoll =true;
 	private void Start () {
@@ -35,13 +36,13 @@ public class GameDice : MonoBehaviour {
     }
 
     public void LaunchReady(){
-        Manager.gm.hasLaunched = true;      
+        Manager.gm.canLaunch= true;      
     }
 
     public void changeTurn(){
         Manager.gm.canMove = true;
         if (whosTurn == 1)
-        {
+        {           
             Manager.gm.changeTurn(1);
         } else if (whosTurn == 2)
         {
@@ -55,7 +56,7 @@ public class GameDice : MonoBehaviour {
         {
             Manager.gm.changeTurn(4);
         }
-
+        Manager.gm.whoseTurn = whosTurn;
         if(whosTurn <4){          
             whosTurn += 1;
         }else{

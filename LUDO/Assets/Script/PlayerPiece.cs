@@ -8,7 +8,11 @@ public class PlayerPiece : MonoBehaviour
     public bool canMove;
     public int MoveSpace;
 
+    [SerializeField]protected int spaceIndex;
+    [SerializeField]protected int stepsRemaining;
     public Paths PlayerPath;
+
+    public Transform LaunchSpot;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +26,7 @@ public class PlayerPiece : MonoBehaviour
         
     }
 
-    public void launch(){
-        transform.position = PlayerPath.PathGlobal[0].position;
-        Manager.gm.hasLaunched = false;
-        Manager.gm.canMove = false;        
-    }
+   
 
     
 }

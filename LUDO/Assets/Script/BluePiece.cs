@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedPiece : PlayerPiece
+public class BluePiece : PlayerPiece
 {
     int playerIndex;
-    
     GameDice Dice;
     Manager GameManager;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +20,12 @@ public class RedPiece : PlayerPiece
     }
 
     public void OnMouseDown() {
-        if(Manager.gm.whoseTurn == 1 && Manager.gm.canMove == true && hasLaunched == true){
+        if(Manager.gm.whoseTurn == 2 && Manager.gm.canMove == true && hasLaunched == true){
             Debug.Log(Manager.gm.canMove);
             MovePlayer();
-        }else{
-            Debug.Log("Error");
         }
 
-        if(Manager.gm.whoseTurn == 1 && Manager.gm.canLaunch == true && hasLaunched == false){
+        if(Manager.gm.whoseTurn == 2 && Manager.gm.canLaunch == true && hasLaunched == false){
             LaunchNewPiece();           
         }        
     }
@@ -37,24 +33,25 @@ public class RedPiece : PlayerPiece
     void LaunchNewPiece(){
         hasLaunched = true;
         Manager.gm.canLaunch = false;
-        transform.position = LaunchSpot.position;
+        transform.position = LaunchSpot.position + new Vector3(
+            Random.Range(-0.3f, 0.3f), Random.Range(-0.3f, 0.3f));;
         Manager.gm.canMove = false;
         Dice.onRoll = true;
     }
     
 
     void MovePlayer(){
-        StartCoroutine(MoveSteps(PlayerPath.PathR));
+        StartCoroutine(MoveSteps(PlayerPath.PathB));
     }
 
     IEnumerator MoveSteps(Transform[] playerPath){
-        int steps = Manager.gm.stepsAmount;
+         int steps = Manager.gm.stepsAmount;
         //int backwardSteps =
         if(spaceIndex+steps <= playerPath.Length){
             for (int i = spaceIndex; i < (spaceIndex + steps); i++){
                 if(AvailablePath(steps, spaceIndex, playerPath) == true){
                     transform.position = playerPath[i].position + 
-                    new Vector3(-0.3f, -0.3f,0);
+                    new Vector3(-0.3f, 0.3f,0);
                     yield return new WaitForSeconds(0.2f);         
                 }
                    
@@ -81,18 +78,22 @@ public class RedPiece : PlayerPiece
             }
             spaceIndex = (playerPath.Length - backwardSteps);
         }
+
         Dice.onRoll = true;
         
         Manager.gm.canMove = false;
         Manager.gm.canLaunch = false;
-        
+        Manager.gm.declareWinner();
+
         if(spaceIndex == playerPath.Length){
-            Manager.gm.redScore++;
-            Debug.Log("a Red Piece has reached Home!");
+            Manager.gm.blueScore++;
+            Debug.Log("a Blue Piece has reached Home!");
             Destroy(gameObject);
         }
+
         StopCoroutine(MoveSteps(playerPath));
 
+        
     }
 
     bool AvailablePath(int StepsRemaining, int StepsTaken, Transform[] remainingPath){
