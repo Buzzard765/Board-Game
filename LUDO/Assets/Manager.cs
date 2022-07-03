@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Manager : MonoBehaviour
 {
     public int whoseTurn;
@@ -12,6 +12,8 @@ public class Manager : MonoBehaviour
     public int stepsAmount;
     public bool canMove, canLaunch;
     public bool gameClear;
+    [SerializeField] private Text WinText;
+    [SerializeField] private GameObject Panel;
     GameDice dice;
     private void Awake() {
         gm = this;
@@ -29,18 +31,21 @@ public class Manager : MonoBehaviour
     }
 
     public void declareWinner(){
-        if(redScore == 4){
-            gameClear = true;
-            Debug.Log("Player 1 Wins");
+        if(redScore == 4){                   
+            WinText.text += "\nPlayer 1 Wins";
+            gameClear = true;         
         }else if(blueScore == 4){
+            WinText.text += "\nPlayer 2 Wins";
             gameClear = true;
-            Debug.Log("Player 1 Wins");
         }else if(greenScore == 4){
-            Debug.Log("Player 1 Wins");
+            WinText.text += "\nPlayer 3 Wins";
             gameClear = true;
         }else if(yellowScore == 4){
-            Debug.Log("Player 1 Wins");
+            WinText.text += "\nPlayer 4 Wins";
             gameClear = true;
+        }
+        if(gameClear == true){
+            Panel.SetActive(true);
         }
     }
     public void changeTurn(int player){
